@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Modules\Product\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +16,12 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/product', function (Request $request) {
     return $request->user();
+});
+
+Route::prefix('product')->middleware(['auth:sanctum'])->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+    Route::post('{id}', [ProductController::class, 'show']);
+    Route::put('{id}', [ProductController::class, 'update']);
+    Route::delete('{id}', [ProductController::class, 'destroy']);
 });
