@@ -15,7 +15,8 @@ class CreateTableProductsGalleries extends Migration
     {
         Schema::create('product_galleries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('products_id');
+            $table->unsignedBigInteger('products_id');
+            $table->foreign('products_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('photo');
             $table->boolean('is_default');
 

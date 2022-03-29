@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="box-title">
-                            Daftar Barang
+                            Daftar Foto Barang
                         </h4>
                     </div>
                     <div class="card-body--">
@@ -19,16 +19,13 @@
                                             #
                                         </th>
                                         <th>
-                                            Name
+                                            Name Barang
                                         </th>
                                         <th>
-                                            Type
+                                            Foto
                                         </th>
                                         <th>
-                                            Price
-                                        </th>
-                                        <th>
-                                            Quantity
+                                            Default
                                         </th>
                                         <th>
                                             Actions
@@ -36,26 +33,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($products as $product)
+                                    @forelse ($galeries as $items)
                                         <tr>
                                             <td>
-                                                {{ $product->id }}
+                                                {{ $items->id }}
                                             </td>
-                                            <td>{{ $product->name }}</td>
-                                            <td>{{ $product->type }}</td>
-                                            <td>{{ $product->price }}</td>
-                                            <td>{{ $product->quantity }}</td>
                                             <td>
-                                                <a href="{{ route('products.gallery', $product->id) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fa fa-picture-o"></i>
-                                                </a>
-                                                <a href="{{ route('products.edit', $product->id) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    <i class="fa fa-pencil"></i>
-                                                </a>
-                                                <form action="{{ route('products.destroy', $product->id) }}" method="post"
-                                                    class="d-inline">
+                                                {{ $items->product->name }}
+                                            </td>
+                                            <td><img src="{{ url($items->photo) }}" alt=""></td>
+                                            <td>
+                                                {{ $items->is_default ? 'Ya' : 'No' }}
+                                            </td>
+
+                                            <td>
+                                                <form action="{{ route('product-galleries.destroy', $items->id) }}"
+                                                    method="post" class="d-inline">
                                                     @csrf
                                                     @method('delete')
                                                     <button class="btn btn-danger btn-sm">
