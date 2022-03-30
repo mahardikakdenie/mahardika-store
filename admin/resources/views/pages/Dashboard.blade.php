@@ -14,7 +14,7 @@
                             </div>
                             <div class="stat-content">
                                 <div class="text-left dib">
-                                    <div class="stat-text">Rp. <span class="count">{{ $income }}</span>
+                                    <div class="stat-text">$ <span class="count">{{ $income }}</span>
                                     </div>
                                     <div class="stat-heading">Penghasilan</div>
                                 </div>
