@@ -13,9 +13,14 @@
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', 'dashboardController@index')->name("dashboard");
+Route::get('/', 'dashboardController@index')->name("dashboard")->middleware('auth');
 
 Auth::routes(["register" => false]);
-Route::get("products/{id}/gallery", "ProductController@gallery")->name("products.gallery");
-Route::resource('products', 'ProductController');
-Route::resource('product-galleries', "ProductGalleryController");
+Route::get("products/{id}/gallery", "ProductController@gallery")->name("products.gallery")->middleware('auth');
+Route::resource('products', 'ProductController')->middleware('auth');
+Route::resource('product-galleries', "ProductGalleryController")->middleware('auth');
+Route::get("transaction/{id}/set-status", "TransactionController@setStatus")->name("transactions.status")->middleware('auth');
+Route::resource('transactions', "TransactionController")->middleware('auth');
+Auth::routes();
+
+// Route::get('/home', 'HomeController@index')->name('home');

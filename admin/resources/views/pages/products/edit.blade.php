@@ -63,7 +63,7 @@
                 </div>
                 <div class="form-group">
                     <button class="btn-primary btn btn-block" type="submit">
-                        Tambah Barang
+                        Ubah Barang
                     </button>
                 </div>
             </form>
