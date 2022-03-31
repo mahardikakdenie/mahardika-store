@@ -20,8 +20,8 @@ class ProductGallery extends Model
         return $this->belongsTo(Product::class, 'products_id');
     }
 
-    public function getPhotoAttribute($value)
-    {
-        return url('storage/' . $value);
-    }
+    // public function getPhotoAttribute($value)
+    // {
+    //     return url('storage/' . $value);
+    // }
 }

@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $data = $request->all();
-        $data['slug'] = Str::slug($request->name);
+        $data['slug'] = Product::generateSlug($request->name);
         Product::create($data);
 
         return redirect()->route('products.index');

@@ -25,7 +25,7 @@ class ProductGallery extends FormRequest
     {
         return [
             "products_id" => "required|integer|exists:products,id",
-            "photo" => "required|image",
+            "photo" => "required",
             "is_default" => "required|boolean",
         ];
     }
