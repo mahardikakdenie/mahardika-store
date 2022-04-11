@@ -18,17 +18,13 @@
                   class="product-thumbs-track ps-slider"
                 >
                   <div
-                    v-for="(img, index) in imgs"
+                    v-for="(img, index) in data.galeries"
                     :key="index"
-                    @click="clickImg(index + 1)"
-                    class="pt"
-                    :class="`${
-                      img_default === `img/mickey${index + 1}.jpg`
-                        ? 'active'
-                        : ''
-                    }`"
+                    @click="clickImg(img.photo)"
+                    class="pt rounded-lg"
+                    :class="`${img_default === img.photo ? 'active' : ''}`"
                   >
-                    <img :src="img" alt="" />
+                    <img :src="img.photo" alt="" />
                   </div>
                 </carousel>
               </div>
@@ -36,8 +32,8 @@
             <div class="col-lg-6">
               <div class="product-details text-left">
                 <div class="pd-title">
-                  <span>oranges</span>
-                  <h3>Pure Pineapple</h3>
+                  <span>{{ data.type }}</span>
+                  <h3>{{ data.name }}</h3>
                 </div>
                 <div class="pd-desc">
                   <p>
@@ -62,10 +58,10 @@
                     praesentium veritatis quis beatae ea atque perferendis
                     voluptates velit architecto?
                   </p>
-                  <h4>$495.00</h4>
+                  <h4>${{ data.price }}</h4>
                 </div>
                 <div class="quantity">
-                  <a href="shopping-cart.html" class="primary-btn pd-cart"
+                  <a @click="addCart" class="cursor-pointer primary-btn pd-cart"
                     >Add To Cart</a
                   >
                 </div>
@@ -90,14 +86,34 @@ export default {
       type: Array,
       default: null,
     },
-    img_default: {
-      type: String,
+    // img_default: {
+    //   type: String,
+    //   default: null,
+    // },
+    data: {
+      type: Object,
       default: null,
     },
   },
+  data: () => ({
+    img_default: "img/mickey1.jpg",
+  }),
+  mounted() {
+    for (const item in this.data.galeries) {
+      if (Object.hasOwnProperty.call(this.data.galeries, item)) {
+        const img = this.data.galeries[item];
+        if (img.is_default) {
+          this.img_default = img.photo;
+        }
+      }
+    }
+  },
   methods: {
-    clickImg(index) {
-      this.$emit("change", index);
+    clickImg(url) {
+      this.img_default = url;
+    },
+    addCart() {
+      this.$emit("add-cart");
     },
   },
 };
@@ -106,5 +122,8 @@ export default {
 <style scoped>
 .product-thumbs .pt {
   margin-right: 14px;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 </style>

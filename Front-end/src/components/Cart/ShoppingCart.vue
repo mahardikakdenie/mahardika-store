@@ -17,28 +17,34 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td class="cart-pic first-row">
-                        <img src="img/cart-page/product-1.jpg" />
+                    <tr v-for="(v, i) in cart" :key="i">
+                      <td v-if="v.product" class="si-pic">
+                        <div v-for="(item, i) in v.product.galeries" :key="i">
+                          <img
+                            class="rounded"
+                            v-if="item.is_default"
+                            :src="item.photo"
+                            width="100%"
+                            height="70"
+                            alt=""
+                          />
+                        </div>
                       </td>
-                      <td class="cart-title first-row text-center">
-                        <h5>Pure Pineapple</h5>
+                      <td
+                        v-if="v.product"
+                        class="cart-title first-row text-center"
+                      >
+                        <h5>{{ v.product.name }}</h5>
                       </td>
-                      <td class="p-price first-row">$60.00</td>
+                      <td class="p-price first-row" v-if="v.product">
+                        ${{ v.product.price }}
+                      </td>
                       <td class="delete-item">
-                        <a href="#"><i class="material-icons"> close </i></a>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td class="cart-pic first-row">
-                        <img src="img/cart-page/product-1.jpg" />
-                      </td>
-                      <td class="cart-title first-row text-center">
-                        <h5>Pure Pineapple</h5>
-                      </td>
-                      <td class="p-price first-row">$60.00</td>
-                      <td class="delete-item">
-                        <a href="#"><i class="material-icons"> close </i></a>
+                        <a href="#"
+                          ><i class="material-icons" @click="destroyCart(v)">
+                            close
+                          </i></a
+                        >
                       </td>
                     </tr>
                   </tbody>
@@ -52,6 +58,7 @@
                   <div class="form-group">
                     <label for="namaLengkap">Nama lengkap</label>
                     <input
+                      v-model="form.name"
                       type="text"
                       class="form-control"
                       id="namaLengkap"
@@ -62,6 +69,7 @@
                   <div class="form-group">
                     <label for="namaLengkap">Email Address</label>
                     <input
+                      v-model="form.email"
                       type="email"
                       class="form-control"
                       id="emailAddress"
@@ -72,6 +80,7 @@
                   <div class="form-group">
                     <label for="namaLengkap">No. HP</label>
                     <input
+                      v-model="form.contact"
                       type="text"
                       class="form-control"
                       id="noHP"
@@ -82,6 +91,7 @@
                   <div class="form-group">
                     <label for="alamatLengkap">Alamat Lengkap</label>
                     <textarea
+                      v-model="form.address"
                       class="form-control"
                       id="alamatLengkap"
                       rows="3"
@@ -98,10 +108,12 @@
               <div class="proceed-checkout text-left">
                 <ul>
                   <li class="subtotal">ID Transaction <span>#SH12000</span></li>
-                  <li class="subtotal mt-3">Subtotal <span>$240.00</span></li>
+                  <li class="subtotal mt-3">
+                    Subtotal <span>${{ total }}</span>
+                  </li>
                   <li class="subtotal mt-3">Pajak <span>10%</span></li>
                   <li class="subtotal mt-3">
-                    Total Biaya <span>$440.00</span>
+                    Total Biaya <span>${{ afterDiscount }}</span>
                   </li>
                   <li class="subtotal mt-3">
                     Bank Transfer <span>Mandiri</span>
@@ -113,9 +125,9 @@
                     Nama Penerima <span>Shayna</span>
                   </li>
                 </ul>
-                <router-link to="/success" class="proceed-btn"
-                  >I ALREADY PAID</router-link
-                >
+                <button @click="paid(cart)" class="proceed-btn">
+                  I ALREADY PAID
+                </button>
               </div>
             </div>
           </div>
@@ -127,7 +139,44 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    cart: {
+      type: Array,
+      required: true,
+    },
+  },
+  data: () => ({
+    form: {
+      name: "",
+      email: "",
+      contact: "",
+      address: "",
+    },
+  }),
+  computed: {
+    total() {
+      return this.cart.reduce((acc, v) => {
+        return acc + v.product.price;
+      }, 0);
+    },
+    afterDiscount() {
+      return this.total - this.total * 0.1;
+    },
+  },
+  methods: {
+    destroyCart(item) {
+      this.$emit("destroy", item);
+    },
+    paid(item) {
+      this.$emit("paid", {
+        item: item,
+        form: this.form,
+        after_discount: this.afterDiscount,
+      });
+    },
+  },
+};
 </script>
 
 <style></style>

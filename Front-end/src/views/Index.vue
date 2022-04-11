@@ -1,6 +1,11 @@
 <template>
   <div>
-    <Header @login="login" :token="token" />
+    <Header
+      @login="login"
+      :token="token"
+      :cart="computedCart"
+      @checkout="goCart"
+    />
     <router-view />
     <Footer />
   </div>
@@ -17,6 +22,11 @@ export default {
   data: () => ({
     token: false,
   }),
+  computed: {
+    computedCart() {
+      return this.$store.state.cart.data;
+    },
+  },
   mounted() {
     if (
       localStorage.getItem("acces_token") !== null ||
@@ -26,6 +36,7 @@ export default {
     } else {
       this.token = false;
     }
+    this.getDataCart();
   },
   methods: {
     async login() {
@@ -68,6 +79,51 @@ export default {
             }
           });
       }
+    },
+    getDataCart() {
+      this.$store.dispatch("cart/getDataCart", {
+        entities: "product.galeries",
+      });
+    },
+    goCart() {
+      this.$router.push("/cart");
+    },
+    storeDataTransaction({ cart, total }) {
+      console.log(cart);
+      console.log(total);
+      this.$store
+        .dispatch("transaction/storeDataTransaction", {
+          // entities: "details.product.galeries",
+          name: "User Shayna",
+          email: "Email User",
+          number: "phone number",
+          address: "email User",
+          transaction_total: total,
+          product_id: cart.product.id,
+        })
+        .then((res) => {
+          if (res.data.meta.status) {
+            this.$router.push("/cart");
+            const Toast = this.$swal.mixin({
+              toast: true,
+              position: "bottom-end",
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener("mouseenter", this.$swal.stopTimer);
+                toast.addEventListener("mouseleave", this.$swal.resumeTimer);
+              },
+              popup: "swal2-show",
+              backdrop: "swal2-backdrop-show",
+              icon: "swal2-icon-show",
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Checkout",
+            });
+          }
+        });
     },
   },
 };

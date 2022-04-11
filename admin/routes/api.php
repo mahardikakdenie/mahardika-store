@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\API\TransactionController;
 use Illuminate\Http\Request;
 
 /*
@@ -17,6 +19,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::prefix('product')->group(function () {
-    Route::get('', "API\ProductController@index");
-    Route::get('{id}', "API\ProductController@show");
+    Route::get('', [ProductController::class, 'index']);
+    Route::get('{id}', [ProductController::class, 'show']);
+});
+
+Route::prefix('cart')->group(function () {
+    Route::post('', [ProductController::class, 'storeCart']);
+    Route::get('', [ProductController::class, 'indexCart']);
+    Route::delete('{id}', [ProductController::class, 'deleteCart']);
+});
+
+Route::prefix('transaction')->group(function () {
+    Route::get('', [TransactionController::class, 'index']);
+    Route::post('', [TransactionController::class, 'store']);
+    Route::get('{id}', [TransactionController::class, 'show']);
 });

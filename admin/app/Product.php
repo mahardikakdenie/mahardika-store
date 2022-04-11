@@ -24,7 +24,7 @@ class Product extends Model
     public static function scopeGenerateSlug($q, $title)
     {
         $new_slug = Str::slug($title);
-        $slug_check = Self::where('slug', $new_slug)->count();
+        $slug_check = Self::pwhere('slug', $new_slug)->count();
         if ($slug_check == 0) {
             $slug = $new_slug;
         } else {
@@ -32,7 +32,7 @@ class Product extends Model
             $unique = false;
             while ($unique == false) {
                 $inc_id = ++$check;
-                $check = Self::where('slug', $new_slug . '-' . $inc_id)->count();
+                $check = Self::pwhere('slug', $new_slug . '-' . $inc_id)->count();
                 if ($check > 0) {
                     $unique = false;
                 } else {

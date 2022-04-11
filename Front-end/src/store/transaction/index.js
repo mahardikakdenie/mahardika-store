@@ -1,17 +1,19 @@
 import axios from "axios";
-
 export default {
   namespaced: true,
   state: {
     data: [],
-    show: {},
   },
   mutations: {
     GET_DATA: (state, payload) => (state.data = payload),
-    GET_SHOW: (state, payload) => (state.show = payload),
+    INSERT_DATA: (state, payload) => {
+      const data = state.data;
+      data.push(payload);
+      state.data = data;
+    },
   },
   actions: {
-    getDataProduct: ({ commit }, payload) => {
+    getDataTransaction: ({ commit }, payload) => {
       axios.defaults.headers.common.Authorization =
         "Bearer " + localStorage.getItem("access_token");
       axios.defaults.baseURL = process.env.VUE_APP_API_URL;
@@ -19,7 +21,7 @@ export default {
       return new Promise((resolve, reject) => {
         const params = { ...payload };
         axios
-          .get("product", { params: params })
+          .get("transaction", { params: params })
           .then((res) => {
             commit("GET_DATA", res.data.data);
             resolve(res);
@@ -29,18 +31,17 @@ export default {
           });
       });
     },
-    getShowProduct: ({ commit }, payload) => {
+    storeDataTransaction: ({ commit }, payload) => {
       axios.defaults.headers.common.Authorization =
         "Bearer " + localStorage.getItem("access_token");
       axios.defaults.baseURL = process.env.VUE_APP_API_URL;
 
       return new Promise((resolve, reject) => {
-        const params = { ...payload };
         axios
-          .get(`product/${payload.id}`, { params: params })
+          .post("transaction", { ...payload })
           .then((res) => {
-            commit("GET_SHOW", res.data.data);
             resolve(res);
+            commit("INSERT_DATA", payload);
           })
           .catch((e) => {
             reject(e);

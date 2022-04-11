@@ -16,4 +16,19 @@ class User extends Model
     {
         return \Modules\User\Database\factories\UserFactory::new();
     }
+
+    // == scope == //
+    public function scopeEntities($query, $entities)
+    {
+        if ($entities != null || $entities != '') {
+            $entities = str_replace(' ', '', $entities);
+            $entities = explode(',', $entities);
+
+            try {
+                return $query = $query->with($entities);
+            } catch (\Throwable $th) {
+                return Json::exception(null, validator()->errors());
+            }
+        }
+    }
 }

@@ -3,23 +3,14 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Transaction extends Model
+class Cart extends Model
 {
-    use SoftDeletes;
-    protected $fillable = [
-        'uuid', 'name', 'email', 'number', 'address', 'trasaction_total', 'transaction_status'
-    ];
 
-    protected $hidden = [];
-
-    public function details()
+    public function product()
     {
-        return $this->hasMany(TransactionDetail::class, 'transactions_id');
+        return $this->belongsTo(Product::class, 'products_id');
     }
-
-    // == scope == //
 
     public function scopeEntities($query, $entities)
     {

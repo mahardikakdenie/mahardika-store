@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     name: "Index",
-    path: "/",
+    path: "",
     component: Index,
     children: [
       {
@@ -17,15 +17,9 @@ const routes = [
         component: Home,
       },
       {
-        path: "/detail-product",
-        name: "About",
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: () =>
-          import(
-            /* webpackChunkName: "about" */ "../views/pages/DetailProduct.vue"
-          ),
+        path: "product",
+        name: "detail-product",
+        component: () => import("@/views/pages/DetailProduct.vue"),
       },
       {
         path: "/cart",

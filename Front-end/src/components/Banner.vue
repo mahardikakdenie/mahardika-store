@@ -8,158 +8,49 @@
             class="product-slider"
             :items="3"
             :loop="true"
-            :autoplay="true"
+            :autoplay="false"
             :nav="false"
             :dots="false"
           >
-            <div class="product-item">
+            <div v-for="(item, i) in data" :key="i" class="product-item">
               <div class="pi-pic">
-                <img src="img/mickey1.jpg" alt="" />
+                <div v-if="item.galeries">
+                  <div v-for="(img, i) in item.galeries" :key="i">
+                    <img
+                      v-if="img.is_default === 1"
+                      class="rounded-lg"
+                      :src="img.photo"
+                      alt=""
+                    />
+                  </div>
+                </div>
+
+                <div v-else>
+                  <img src="img/mickey1.jpg" alt="" />
+                </div>
+
                 <ul>
                   <li class="w-icon active">
-                    <router-link to="detail-product"
+                    <router-link :to="`product?id=${item.id}`"
                       ><i class="icon_bag_alt"></i
                     ></router-link>
                   </li>
                   <li class="quick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
+                    <router-link :to="`product?id=${item.id}`"
+                      >+ Quick View</router-link
+                    >
                   </li>
                 </ul>
               </div>
               <div class="pi-text">
-                <div class="catagory-name">Coat</div>
-                <router-link to="detail-product">
-                  <h5>Mickey Baggy</h5>
+                <div class="catagory-name">{{ item.id }}</div>
+                <router-link :to="`product?id=${item.id}`">
+                  <h5>{{ item.name }}</h5>
                 </router-link>
                 <div class="product-price">
-                  $14.00
-                  <span>$35.00</span>
+                  ${{ item.price }}
+                  <!-- <span>$35.00</span> -->
                 </div>
-              </div>
-            </div>
-            <div class="product-item">
-              <div class="pi-pic">
-                <img src="img/products/women-2.jpg" alt="" />
-                <ul>
-                  <li class="w-icon active">
-                    <router-link to="detail-product"
-                      ><i class="icon_bag_alt"></i
-                    ></router-link>
-                  </li>
-                  <li class="router-linkick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="pi-text">
-                <div class="catagory-name">Shoes</div>
-                <router-link to="detail-product">
-                  <h5>Guangzhou sweater</h5>
-                </router-link>
-                <div class="product-price">$13.00</div>
-              </div>
-            </div>
-            <div class="product-item">
-              <div class="pi-pic">
-                <img src="img/products/women-3.jpg" alt="" />
-                <ul>
-                  <li class="w-icon active">
-                    <router-link to="detail-product"
-                      ><i class="icon_bag_alt"></i
-                    ></router-link>
-                  </li>
-                  <li class="router-linkick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <router-link to="detail-product">
-                  <h5>Pure Pineapple</h5>
-                </router-link>
-                <div class="product-price">$34.00</div>
-              </div>
-            </div>
-            <div class="product-item">
-              <div class="pi-pic">
-                <img src="img/products/women-4.jpg" alt="" />
-                <ul>
-                  <li class="w-icon active">
-                    <router-link to="detail-product"
-                      ><i class="icon_bag_alt"></i
-                    ></router-link>
-                  </li>
-                  <li class="router-linkick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
-                  </li>
-                  <li class="router-linkicon">
-                    <router-link to="detail-product"
-                      ><i class="fa fa-random"></i
-                    ></router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <router-link to="detail-product">
-                  <h5>Converse Shoes</h5>
-                </router-link>
-                <div class="product-price">$34.00</div>
-              </div>
-            </div>
-            <div class="product-item">
-              <div class="pi-pic">
-                <img src="img/products/women-1.jpg" alt="" />
-                <ul>
-                  <li class="w-icon active">
-                    <router-link to="detail-product"
-                      ><i class="icon_bag_alt"></i
-                    ></router-link>
-                  </li>
-                  <li class="router-linkick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
-                  </li>
-                  <li class="router-linkicon">
-                    <router-link to="detail-product"
-                      ><i class="fa fa-random"></i
-                    ></router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <router-link to="detail-product">
-                  <h5>Converse Shoes</h5>
-                </router-link>
-                <div class="product-price">$34.00</div>
-              </div>
-            </div>
-            <div class="product-item">
-              <div class="pi-pic">
-                <img src="img/products/women-2.jpg" alt="" />
-                <ul>
-                  <li class="w-icon active">
-                    <router-link to="detail-product"
-                      ><i class="icon_bag_alt"></i
-                    ></router-link>
-                  </li>
-                  <li class="router-linkick-view">
-                    <router-link to="detail-product">+ Quick View</router-link>
-                  </li>
-                  <li class="router-linkicon">
-                    <router-link to="detail-product"
-                      ><i class="fa fa-random"></i
-                    ></router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="pi-text">
-                <div class="catagory-name">Towel</div>
-                <router-link to="detail-product">
-                  <h5>Converse Shoes</h5>
-                </router-link>
-                <div class="product-price">$34.00</div>
               </div>
             </div>
           </carousel>
@@ -173,6 +64,12 @@
 <script>
 import carousel from "vue-owl-carousel";
 export default {
+  props: {
+    data: {
+      type: Array,
+      default: null,
+    },
+  },
   components: {
     carousel,
   },

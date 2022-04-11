@@ -1,20 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Http\Requests\ProductGallery as RequestsProductGallery;
-use App\Product;
-use App\ProductGallery;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ProductGalleryController extends Controller
+class TransactionDetailController extends Controller
 {
-
-    // public function __construct(Type $var = null)
-    // {
-    //     $this->middleware('auth');
-    // }
-
     /**
      * Display a listing of the resource.
      *
@@ -22,10 +14,7 @@ class ProductGalleryController extends Controller
      */
     public function index()
     {
-        $galeries = ProductGallery::all();
-        return view('pages.product-galleries.index')->with([
-            "galeries" => $galeries
-        ]);
+        //
     }
 
     /**
@@ -35,10 +24,7 @@ class ProductGalleryController extends Controller
      */
     public function create()
     {
-        $product = Product::all();
-        return view('pages.product-galleries.create')->with([
-            "products" => $product
-        ]);
+        //
     }
 
     /**
@@ -47,16 +33,9 @@ class ProductGalleryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RequestsProductGallery $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        $data["photo"] = $request->file('photo')->store(
-            "assets/product",
-            "public"
-        );
-
-        ProductGallery::create($data);
-        return redirect()->route('product-galleries.index');
+        //
     }
 
     /**
@@ -101,9 +80,6 @@ class ProductGalleryController extends Controller
      */
     public function destroy($id)
     {
-        $item = ProductGallery::findOrFail($id);
-        $item->delete();
-
-        return redirect()->route('product-galleries.index');
+        //
     }
 }

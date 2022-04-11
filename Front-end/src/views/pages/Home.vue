@@ -3,7 +3,7 @@
     <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
 
     <Hero />
-    <Banner />
+    <Banner :data="computedData" />
     <InstaImage />
     <Patner />
   </div>
@@ -25,6 +25,21 @@ export default {
     Banner,
     Patner,
     InstaImage,
+  },
+  computed: {
+    computedData() {
+      return this.$store.state.product.data;
+    },
+  },
+  mounted() {
+    this.getDataProduct();
+  },
+  methods: {
+    getDataProduct() {
+      this.$store.dispatch("product/getDataProduct", {
+        entities: "galeries",
+      });
+    },
   },
 };
 </script>

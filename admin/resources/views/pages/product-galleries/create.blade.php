@@ -25,10 +25,10 @@
                     <label class="form-control-label" for="photo">
                         Foto Barang
                     </label>
-                    {{-- <input type="file" name="photo" value="{{ old('photo') }}"
-                        class="form-control p-6 @error('photo') is-invalid @enderror" accept="image/*" /> --}}
-                    <input type="text" name="photo" value="{{ old('photo') }}"
-                        class="form-control @error('photo') is-invalid @enderror" placeholder="Masukan Link Gambar">
+                    <input type="file" name="photo" value="{{ old('photo') }}"
+                        class="form-control p-6 @error('photo') is-invalid @enderror" accept="image/*" />
+                    {{-- <input type="text" name="photo" value="{{ old('photo') }}"
+                        class="form-control @error('photo') is-invalid @enderror" placeholder="Masukan Link Gambar"> --}}
                     @error('photo')
                         <div class="text-muted">{{ $message }}</div>
                     @enderror
